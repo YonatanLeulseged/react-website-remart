@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import {Button} from './Button';
@@ -9,7 +9,7 @@ function Navbar() {
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
 
-    
+    //function to only show sign up in full window mode
     const showButton = () => {
         if(window.innerWidth <= 960){
             setButton(false);
@@ -17,13 +17,17 @@ function Navbar() {
             setButton(true);
         }
     };
+    //calls showButton when refreshing
+    useEffect(() => {
+      showButton();
+    }, []);
 
     window.addEventListener('resize', showButton);
   return (
     <>
       <nav className='navbar'>
         <div className='nav-bar-container'>
-          <Link to="/" className='navbar-logo'>
+          <Link to="/" className='navbar-logo' onClick = {closeMobileMenu}>
             Remart <i className='fab fa-typo3' />
           </Link>
           <div className='menu-icon' onClick = {handleClick}>
